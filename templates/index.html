@@ -3,67 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Chatbot</title>
+    <title>Aurora</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-        }
-
-        #bottomArea {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 10px;
             background-color: #f8f9fa;
-            border-top: 1px solid #dee2e6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0;
         }
 
-        #resultsArea {
-            margin-bottom: 80px; /* Adjust as needed */
-        }
-
-        /* Updated style for the result boxes with scrollbar */
-        .result-box {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 5px;
-            max-height: 300px; /* Adjust the max height as needed */
+        #chatWindow {
+            flex: 1;
             overflow-y: auto;
-            position: relative; /* Add position relative to enable absolute positioning of the button */
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
         }
 
-        /* Style for the regenerate button */
-        .regenerate-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            color: #007bff;
-            text-decoration: underline;
+        .message {
+            padding: 15px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: #ffffff;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .ai-message {
+            background-color: #f8f9fa;
+            border-bottom-left-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        #textInput {
+            width: calc(80% - 30px);
+            max-width: 570px;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        #useRPCheckbox {
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+
+        #sendButton {
+            width: calc(20% - 10px);
+            max-width: 60px;
+            margin-top: 10px;
+            margin-left: 10px;
         }
     </style>
 </head>
 <body class="container mt-5">
-    <h1 class="mb-4">Search Chatbot</h1>
+    <div id="chatWindow">
+        <!-- Display results here -->
+    </div>
 
-    <div id="resultsArea"></div>
-
-    <div id="bottomArea">
-        <form id="searchForm">
-            <div class="form-group">
-                <input type="checkbox" id="useRP" unchecked>
-                <label for="useRP">Use RP Search</label>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" id="query" placeholder="Type your query...">
-            </div>
-            <button type="button" class="btn btn-primary" onclick="search()">Submit</button>
-        </form>
+    <div class="d-flex align-items-end">
+        <input type="text" class="form-control" id="textInput" placeholder="Type your query...">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="useRPCheckbox" unchecked>
+            <label class="form-check-label" for="useRPCheckbox">Use RP Search</label>
+        </div>
+        <button type="button" class="btn btn-primary" id="sendButton" onclick="search()">Send</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

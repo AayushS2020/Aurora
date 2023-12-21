@@ -1,6 +1,7 @@
 function search() {
-    const query = document.getElementById('query').value;
-    const useRPSearch = document.getElementById('useRP').checked;
+    console.log('Search button clicked');
+    const query = document.getElementById('textInput').value;
+    const useRPSearch = document.getElementById('useRPCheckbox').checked;
 
     fetch('/search', {
         method: 'POST',
@@ -36,20 +37,19 @@ function regenerateSearch(query) {
 function getPastYearDateForSearch() {
     const currentDate = new Date();
     const pastYear = currentDate.getFullYear() - 1;
-    return `${pastYear}-01-01`;  // Set the start date of the past year for the search
+    return `${pastYear}-01-01`;  
 }
 
-
 function displayResults(question, items) {
-    const resultsDiv = document.getElementById('resultsArea');
+    const resultsDiv = document.getElementById('chatWindow');
 
     // Create a new result container for each question
     const resultContainer = document.createElement('div');
-    resultContainer.classList.add('result-box', 'mt-4', 'mb-4');
+    resultContainer.classList.add('message');
 
     // Display the user's question
     const questionElement = document.createElement('div');
-    questionElement.classList.add('user-question');
+    questionElement.classList.add('user-message');
     questionElement.innerHTML = `<strong>User Question:</strong> ${question}`;
     resultContainer.appendChild(questionElement);
 
@@ -62,6 +62,7 @@ function displayResults(question, items) {
         const link = item.link;
 
         const resultElement = document.createElement('div');
+        resultElement.classList.add('ai-message');
         resultElement.innerHTML = `<h3>${title}</h3><p>${snippet}</p><a href="${link}" target="_blank">${link}</a><hr>`;
         resultContainer.appendChild(resultElement);
     });
@@ -72,8 +73,8 @@ function displayResults(question, items) {
     regenerateButton.innerHTML = 'Regenerate Response';
     regenerateButton.onclick = function () {
         // Trigger a new search with the same query and check the "Use RP Search" checkbox
-        document.getElementById('query').value = question;
-        document.getElementById('useRP').checked = false;
+        document.getElementById('textInput').value = question;
+        document.getElementById('useRPCheckbox').checked = true;
         regenerateSearch(question);
     };
     resultContainer.appendChild(regenerateButton);
@@ -82,5 +83,5 @@ function displayResults(question, items) {
     resultsDiv.appendChild(resultContainer);
 
     // Clear the input field for the next question
-    document.getElementById('query').value = '';
+    document.getElementById('textInput').value = '';
 }
