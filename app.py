@@ -12,8 +12,8 @@ def search():
     query = request.form.get('query')
     use_rp_search = request.form.get('use_rp_search') == 'true'
 
-    cx = '934e8d51940be4241' if use_rp_search else '36452e79a44404f03'
-    api_key = 'AIzaSyB-AetIuG42LMnFsRkWuht6jAih37cHCxU'
+    cx = '' if use_rp_search else ''
+    api_key = ''
 
     url = f'https://www.googleapis.com/customsearch/v1?q={query}&cx={cx}&key={api_key}'
 
