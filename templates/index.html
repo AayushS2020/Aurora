@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        #bottomArea {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+
+        #resultsArea {
+            margin-bottom: 80px; /* Adjust as needed */
+        }
+
+        .result-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            max-height: 300px; /* Adjust the max height as needed */
+            overflow-y: auto;
+        }
+
+        /* Style for the result boxes */
+        .result-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+
+        /* Style for the user question */
+        .user-question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">Search Chatbot</h1>
+
+    <div id="resultsArea"></div>
+
+    <div id="bottomArea">
+        <form id="searchForm">
+            <div class="form-group">
+                <input type="checkbox" id="useRP" checked>
+                <label for="useRP">Use RP Search</label>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="query" placeholder="Type your query...">
+            </div>
+            <button type="button" class="btn btn-primary" onclick="search()">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
