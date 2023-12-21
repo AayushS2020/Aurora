@@ -7,19 +7,45 @@ function search() {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `query=${encodeURIComponent(query)}&use_rp_search=${useRPSearch}`,
+        body: `query=${encodeURIComponent(query)}&use_rp_search=${useRPSearch}&sort_by=date:r:${getPastYearDate()}`,
     })
     .then(response => response.json())
-    .then(data => displayResults(query, data.items))  // Pass the user's question to displayResults
+    .then(data => displayResults(query, data.items))
     .catch(error => console.error('Error:', error));
 }
+
+function getPastYearDate() {
+    const currentDate = new Date();
+    const pastYear = currentDate.getFullYear() - 1;
+    return `${pastYear}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`;
+}
+
+function regenerateSearch(query) {
+    fetch('/search', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `query=${encodeURIComponent(query)}&use_rp_search=false&sort_by=date:r:${getPastYearDateForSearch()}`,
+    })
+    .then(response => response.json())
+    .then(data => displayResults(query, data.items))
+    .catch(error => console.error('Error:', error));
+}
+
+function getPastYearDateForSearch() {
+    const currentDate = new Date();
+    const pastYear = currentDate.getFullYear() - 1;
+    return `${pastYear}-01-01`;  // Set the start date of the past year for the search
+}
+
 
 function displayResults(question, items) {
     const resultsDiv = document.getElementById('resultsArea');
 
     // Create a new result container for each question
     const resultContainer = document.createElement('div');
-    resultContainer.classList.add('result-box', 'mt-4', 'mb-4');  // Add margin-bottom
+    resultContainer.classList.add('result-box', 'mt-4', 'mb-4');
 
     // Display the user's question
     const questionElement = document.createElement('div');
@@ -40,12 +66,21 @@ function displayResults(question, items) {
         resultContainer.appendChild(resultElement);
     });
 
+    // Add a "Regenerate Response" button
+    const regenerateButton = document.createElement('div');
+    regenerateButton.classList.add('regenerate-button');
+    regenerateButton.innerHTML = 'Regenerate Response';
+    regenerateButton.onclick = function () {
+        // Trigger a new search with the same query and check the "Use RP Search" checkbox
+        document.getElementById('query').value = question;
+        document.getElementById('useRP').checked = false;
+        regenerateSearch(question);
+    };
+    resultContainer.appendChild(regenerateButton);
+
     // Append the result container to the results area
     resultsDiv.appendChild(resultContainer);
 
     // Clear the input field for the next question
     document.getElementById('query').value = '';
 }
-
-
-
