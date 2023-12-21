@@ -43,11 +43,11 @@ function getPastYearDateForSearch() {
 function displayResults(question, items) {
     const resultsDiv = document.getElementById('chatWindow');
 
-    // Create a new result container for each question
+    // New Container
     const resultContainer = document.createElement('div');
     resultContainer.classList.add('message');
 
-    // Display the user's question
+    // Question
     const questionElement = document.createElement('div');
     questionElement.classList.add('user-message');
     questionElement.innerHTML = `<strong>User Question:</strong> ${question}`;
@@ -72,16 +72,16 @@ function displayResults(question, items) {
     regenerateButton.classList.add('regenerate-button');
     regenerateButton.innerHTML = 'Regenerate Response';
     regenerateButton.onclick = function () {
-        // Trigger a new search with the same query and check the "Use RP Search" checkbox
+        
         document.getElementById('textInput').value = question;
         document.getElementById('useRPCheckbox').checked = true;
         regenerateSearch(question);
     };
     resultContainer.appendChild(regenerateButton);
 
-    // Append the result container to the results area
+    // Append
     resultsDiv.appendChild(resultContainer);
 
-    // Clear the input field for the next question
+    // Clear
     document.getElementById('textInput').value = '';
 }
